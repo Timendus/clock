@@ -219,7 +219,7 @@ function getTextColour(color) {
   let r = parseInt(color.substring(1, 3), 16);
   let g = parseInt(color.substring(3, 5), 16);
   let b = parseInt(color.substring(5, 7), 16);
-  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  const yiq = Math.round((r * 299 + g * 587 + b * 114) / 1000);
 
   const factor = 1.3;
   if (yiq >= 128) {
