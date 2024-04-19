@@ -40,6 +40,11 @@ function update() {
   let currentScheduleItem, nextScheduleItem;
   for (const i in schedule) {
     if (schedule[i].date > date) {
+      if (i == 0) {
+        currentScheduleItem = schedule[schedule.length - 1];
+        nextScheduleItem = schedule[0];
+        break;
+      }
       currentScheduleItem = schedule[i - 1];
       nextScheduleItem = schedule[i];
       break;
@@ -49,13 +54,17 @@ function update() {
   if (!currentScheduleItem) {
     // We're at the end of the schedule, so the current item is the last item
     currentScheduleItem = schedule[schedule.length - 1];
+    nextScheduleItem = schedule[0];
   }
 
   if (currentScheduleItem.activity)
     nowPlayingElm.textContent = currentScheduleItem.activity;
 
   // Is the next schedule item soon?
-  if (nextScheduleItem && (nextScheduleItem.date - date) / 60 / 1000 <= 10) {
+  if (
+    nextScheduleItem &&
+    minutesBetweenDates(date, nextScheduleItem.date) <= 10
+  ) {
     // Then show the title and skew the background colour
     if (nextScheduleItem.activity) {
       nextUpH1Elm.textContent = `— Coming up at ${nextScheduleItem.time} —`;
@@ -64,7 +73,7 @@ function update() {
     const color = interpolate(
       nextScheduleItem.color,
       currentScheduleItem.color,
-      (nextScheduleItem.date - date) / 60 / 1000 / 10
+      secondsBetweenDates(new Date(), nextScheduleItem.date) / (10 * 60)
     );
     document.body.style.backgroundColor = color;
     themeColorElm.content = color;
@@ -85,8 +94,8 @@ function update() {
   // Show progress bar to next item, if there is a next item
   if (nextScheduleItem) {
     const progress =
-      ((new Date() - currentScheduleItem.date) /
-        (nextScheduleItem.date - currentScheduleItem.date)) *
+      (secondsBetweenDates(currentScheduleItem.date, new Date()) /
+        secondsBetweenDates(currentScheduleItem.date, nextScheduleItem.date)) *
       100;
     progressElm.style.width = `${progress}%`;
   } else {
@@ -108,6 +117,36 @@ function update() {
       sound.pause();
     }, 60 * 1000);
   }
+}
+
+/**
+ * Find the number of minutes between two times on the day, considering rollover
+ * to the next day. Dates should be consecutive. Please don't ask me about
+ * daylight saving time.
+ * @param {Date} date1 The first date
+ * @param {Date} date2 The second date
+ * @returns {number} Minutes between the dates
+ */
+function minutesBetweenDates(date1, date2) {
+  return secondsBetweenDates(date1, date2) / 60;
+}
+
+/**
+ * Find the number of seconds between two times on the day, considering rollover
+ * to the next day. Dates should be consecutive. Please don't ask me about
+ * daylight saving time.
+ * @param {Date} date1 The first date
+ * @param {Date} date2 The second date
+ * @returns {number} Seconds between the dates
+ */
+function secondsBetweenDates(date1, date2) {
+  // If the second date is earlier than the first, assume it's the next day
+  if (date1 > date2) {
+    const date2Copy = new Date(date2.getTime());
+    date2Copy.setDate(date2Copy.getDate() + 1);
+    return (date2Copy - date1) / 1000;
+  }
+  return (date2 - date1) / 1000;
 }
 
 /**
