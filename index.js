@@ -96,7 +96,7 @@ function update() {
     const progress =
       (secondsBetweenDates(currentScheduleItem.date, new Date()) /
         secondsBetweenDates(currentScheduleItem.date, nextScheduleItem.date)) *
-      100;
+      80;
     progressElm.style.width = `${progress}%`;
   } else {
     progressElm.style.width = "0%";
@@ -332,3 +332,14 @@ document.addEventListener("mousemove", () => {
     mouseHideDelay
   );
 });
+
+// Shift the whole display a couple of pixels to prevent burn in
+
+setInterval(burnInShift, 30 * 1000);
+burnInShift();
+
+function burnInShift() {
+  const xOffset = (Math.floor(Math.random() * 10) - 5) / 10;
+  const yOffset = (Math.floor(Math.random() * 10) - 5) / 10;
+  document.body.style.transform = `translate(${xOffset}em, ${yOffset}em)`;
+}

@@ -14,6 +14,7 @@ body {
   font-size: 3vmax;
   font-style: normal;
   text-align: center;
+  overflow: hidden;
 }
 
 section {
@@ -55,14 +56,15 @@ section {
 #progress {
   position: absolute;
   bottom: 25%;
-  left: 0;
+  left: 10%;
   height: 3px;
   transition: width 1s linear, opacity 0.3s linear;
 }
 
 body {
   cursor: none;
-  transition: background-color 1s linear, color 1s ease-in-out;
+  transition: background-color 1s linear, color 1s ease-in-out,
+    transform 30s linear;
 
   & .clock p,
   & .next-up {
