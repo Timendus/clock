@@ -296,7 +296,7 @@ function scheduleToForm(schedule) {
           <input type="color" name="schedule[${i}][color]" value="${item.color}" />
           <input type="time" name="schedule[${i}][time]" value="${item.time}" />
           <input type="text" name="schedule[${i}][activity]" value="${item.activity}" />
-          <button type="button" class="remove">X</button>
+          <button type="button" class="remove">🗑</button>
         </li>
         `;
       })
@@ -311,7 +311,7 @@ function addRow(buttonElm) {
     <input type="color" name="schedule[${nextItem}][color]" value="${randomColour()}" />
     <input type="time" name="schedule[${nextItem}][time]" value="00:00" />
     <input type="text" name="schedule[${nextItem}][activity]" value="" />
-    <button type="button" class="remove">X</button>
+    <button type="button" class="remove">🗑</button>
   `;
   buttonElm.parentNode.parentNode.insertBefore(li, buttonElm.parentNode);
 }
