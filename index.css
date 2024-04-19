@@ -151,9 +151,9 @@ body {
 dialog#settings {
   width: 70vw;
   max-width: 800px;
-  height: 50vh;
+  height: 70vh;
   top: 50%;
-  margin: -25vh auto auto auto;
+  margin: -35vh auto auto auto;
 
   z-index: 1;
   padding: 0.5em;
@@ -214,11 +214,13 @@ dialog#settings {
   }
 
   input,
-  button {
+  button,
+  select {
     font-family: Tahoma, Arial, sans-serif;
   }
 
-  input {
+  input,
+  select {
     flex: 0 0 auto;
     height: 2em;
     padding: 0.6em 0.8em;
@@ -248,12 +250,17 @@ dialog#settings {
     }
   }
 
+  select {
+    padding: 0 0.8em;
+  }
+
   button {
+    height: 3.5em;
     background-color: rgba(0, 0, 0, 0.9);
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 0.5em 0.8em;
+    padding: 1em 1.5em;
     font-size: 1em;
     cursor: pointer;
 
@@ -276,6 +283,10 @@ dialog#settings {
 
     &.remove {
       border-radius: 50%;
+      width: 2em;
+      height: 2em;
+      padding: 0px;
+      line-height: 2em;
     }
   }
 }

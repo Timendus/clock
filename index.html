@@ -24,17 +24,18 @@
     <dialog id="settings" open>
       <form method="dialog">
         <h1>Your schedule for today</h1>
-        <ul>
-          <li>
-            <input type="color" name="color" value="#0b6a98" />
-            <input type="time" name="time" value="00:00" />
-            <input type="text" name="activity" value="" />
-          </li>
-          <li>
-            <button type="button" class="add">Add another item</button>
-          </li>
-        </ul>
-        <button type="submit">Apply schedule</button>
+        <p>
+          Selected schedule:
+          <select name="schedule">
+            <option value="default">Your schedule</option>
+            <option value="new">New schedule...</option>
+          </select>
+        </p>
+        <ul></ul>
+        <button type="button">📂 Load from file</button>
+        <button type="button">💾 Save to file</button>
+        <button type="button">🗑 Delete schedule</button>
+        <button type="submit" autofocus>✔ Apply schedule</button>
       </form>
     </dialog>
     <section class="clock">
