@@ -197,6 +197,11 @@ dialog#settings {
     }
   }
 
+  input,
+  button {
+    font-family: Tahoma, Arial, sans-serif;
+  }
+
   input {
     flex: 0 0 auto;
     height: 2em;
