@@ -1,0 +1,16 @@
+{
+  "name": "Clock",
+  "short_name": "Clock",
+  "description": "A clock to give your day some more structure",
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#4E1977",
+  "background_color": "#000000",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}

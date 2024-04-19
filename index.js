@@ -1,3 +1,7 @@
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js");
+}
+
 // Load schedule
 
 let schedule = JSON.parse(localStorage.getItem("schedule"));
@@ -13,6 +17,7 @@ const nowPlayingElm = document.querySelector(".clock p");
 const nextUpH1Elm = document.querySelector(".next-up h1");
 const nextUpPElm = document.querySelector(".next-up p");
 const progressElm = document.querySelector("#progress");
+const themeColorElm = document.querySelector("meta[name=theme-color]");
 const sound = new Audio("./ping.mp3");
 let animating = false;
 
@@ -61,14 +66,16 @@ function update() {
       currentScheduleItem.color,
       (nextScheduleItem.date - date) / 60 / 1000 / 10
     );
-    const textColor = getTextColour(color);
     document.body.style.backgroundColor = color;
+    themeColorElm.content = color;
+    const textColor = getTextColour(color);
     document.body.style.color = textColor;
     progressElm.style.backgroundColor = textColor;
     document.body.classList.add("coming-up");
   } else {
     // Otherwise just use the colour from the current item
     document.body.style.backgroundColor = currentScheduleItem.color;
+    themeColorElm.content = currentScheduleItem.color;
     const textColor = getTextColour(currentScheduleItem.color);
     document.body.style.color = textColor;
     progressElm.style.backgroundColor = textColor;
