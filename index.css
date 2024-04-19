@@ -24,14 +24,6 @@ section {
   flex-direction: column;
 }
 
-section.next-up {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-}
-
 .clock {
   margin-bottom: 0.5em;
 
@@ -45,6 +37,16 @@ section.next-up {
 }
 
 .next-up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+
+  & h1 {
+    font-size: 0.8em;
+    font-weight: 200;
+  }
   & p {
     font-size: 1em;
   }
@@ -62,7 +64,8 @@ body {
   cursor: none;
 
   & #progress,
-  & .clock p {
+  & .clock p,
+  & .next-up {
     opacity: 0;
     transition: opacity 0.3s linear;
   }
@@ -73,6 +76,14 @@ body {
     & #progress,
     & .clock p {
       opacity: 1;
+    }
+  }
+
+  &.coming-up {
+    & #progress,
+    & .next-up {
+      opacity: 1;
+      transition-duration: 10s;
     }
   }
 

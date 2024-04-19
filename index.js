@@ -10,7 +10,8 @@ scheduleToForm(schedule);
 
 const clockElm = document.querySelector(".clock h1");
 const nowPlayingElm = document.querySelector(".clock p");
-const pElm = document.querySelector(".next-up p");
+const nextUpH1Elm = document.querySelector(".next-up h1");
+const nextUpPElm = document.querySelector(".next-up p");
 const progressElm = document.querySelector("#progress");
 const sound = new Audio("./ping.mp3");
 let animating = false;
@@ -51,8 +52,10 @@ function update() {
   // Is the next schedule item soon?
   if (nextScheduleItem && (nextScheduleItem.date - date) / 60 / 1000 <= 10) {
     // Then show the title and skew the background colour
-    if (nextScheduleItem.activity)
-      pElm.innerHTML = `Zometeen om ${nextScheduleItem.time} uur:<br/>${nextScheduleItem.activity}`;
+    if (nextScheduleItem.activity) {
+      nextUpH1Elm.textContent = `— Coming up at ${nextScheduleItem.time} —`;
+      nextUpPElm.textContent = nextScheduleItem.activity;
+    }
     const color = interpolate(
       nextScheduleItem.color,
       currentScheduleItem.color,
@@ -62,13 +65,14 @@ function update() {
     document.body.style.backgroundColor = color;
     document.body.style.color = textColor;
     progressElm.style.backgroundColor = textColor;
+    document.body.classList.add("coming-up");
   } else {
     // Otherwise just use the colour from the current item
-    pElm.textContent = "";
     document.body.style.backgroundColor = currentScheduleItem.color;
     const textColor = getTextColour(currentScheduleItem.color);
     document.body.style.color = textColor;
     progressElm.style.backgroundColor = textColor;
+    document.body.classList.remove("coming-up");
   }
 
   // Show progress bar to next item, if there is a next item
