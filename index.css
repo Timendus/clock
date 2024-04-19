@@ -144,12 +144,10 @@ body {
 /* Settings modal styling */
 
 dialog#settings {
-  /* position: fixed; */
   width: 70vw;
   max-width: 800px;
   height: 50vh;
   top: 50%;
-  margin-top: -25vh;
   margin: -25vh auto auto auto;
 
   z-index: 1;
@@ -164,8 +162,10 @@ dialog#settings {
 
   @media (max-width: 768px) {
     width: 100vw;
-    height: 100vh;
-    margin-top: -50vh;
+    height: 100%;
+    top: 0px;
+    bottom: 0px;
+    margin: 0px;
     font-size: 14px;
     border-radius: 0px;
   }
