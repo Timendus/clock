@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./index.js" type="module"></script>
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <title>Clock</title>
+  </head>
+  <body class="mousefocus">
+    <dialog id="settings" open>
+      <form method="dialog">
+        <h1>Your schedule for today</h1>
+        <ul>
+          <li>
+            <input type="color" name="color" value="#0b6a98" />
+            <input type="time" name="time" value="00:00" />
+            <input type="text" name="activity" value="" />
+          </li>
+          <li>
+            <button type="button" class="add">Add another item</button>
+          </li>
+        </ul>
+        <button type="submit">Apply schedule</button>
+      </form>
+    </dialog>
+    <section class="clock">
+      <h1></h1>
+      <p></p>
+    </section>
+    <section class="next-up">
+      <p></p>
+    </section>
+    <div id="progress"></div>
+  </body>
+</html>

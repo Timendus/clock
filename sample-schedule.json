@@ -1,0 +1,32 @@
+[
+  {
+    "time": "08:00",
+    "activity": "Waking up",
+    "color": "#0b6a98"
+  },
+  {
+    "time": "09:00",
+    "activity": "Working",
+    "color": "#772b3f"
+  },
+  {
+    "time": "12:00",
+    "activity": "Lunch break",
+    "color": "#681b8e"
+  },
+  {
+    "time": "13:00",
+    "activity": "Working",
+    "color": "#912987"
+  },
+  {
+    "time": "17:00",
+    "activity": "Chilling",
+    "color": "#b45828"
+  },
+  {
+    "time": "23:00",
+    "activity": "Sleeping",
+    "color": "#b45828"
+  }
+]
