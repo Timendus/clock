@@ -1,4 +1,10 @@
-const filesToCache = ["index.html", "index.js", "index.css"];
+const filesToCache = [
+  "index.html",
+  "index.js",
+  "index.css",
+  "ping.mp3",
+  "sample-schedule.json",
+];
 
 self.addEventListener("install", function (evnt) {
   evnt.waitUntil(
