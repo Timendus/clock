@@ -4,7 +4,7 @@
   "description": "A clock to give your day some more structure",
   "start_url": "index.html",
   "display": "standalone",
-  "theme_color": "#4E1977",
+  "theme_color": "#1C2069",
   "background_color": "#000000",
   "icons": [
     {
