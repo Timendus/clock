@@ -5,9 +5,16 @@
  */
 
 /**
+ * @typedef {Object} CalendarItem
+ * @property {Date} start
+ * @property {Date} end
+ * @property {string} summary
+ */
+
+/**
  * Parses an ics file
  * @param {string} icsData The ics data to parse
- * @returns {{start: Date, end: Date, summary: string}[]} An array of events
+ * @returns {CalendarItem[]} An array of events
  */
 export function parse(icsData) {
   const events = [];
@@ -57,7 +64,7 @@ export function todaysEvents(events) {
  * the given timestamps
  * @param {Date} start Starting timestamp
  * @param {Date} end Ending timestamp
- * @returns {(event: {start: Date, end: Date, summary: string}) => boolean} A
+ * @returns {(event: CalendarItem) => boolean} A
  * function that returns true if the event is relevant
  */
 export function between(start, end) {
