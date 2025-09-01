@@ -15,6 +15,7 @@ body {
   font-style: normal;
   text-align: center;
   overflow: hidden;
+  user-select: none;
 }
 
 section {
@@ -53,6 +54,45 @@ section {
   }
 }
 
+section.buttons {
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.5em;
+  position: fixed;
+  width: auto;
+  height: auto;
+  top: 2em;
+  right: 2em;
+  font-size: 1vmax;
+
+  button {
+    color: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em 0.8em;
+    font-size: 1em;
+    cursor: pointer;
+
+    padding-left: 2.3em;
+    background-size: 1em 1em;
+    background-repeat: no-repeat;
+    background-position: 0.8em center;
+
+    background-color: rgba(0, 0, 0, 0.2);
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &.full-screen {
+      background-image: url("full-screen.svg");
+    }
+    &.schedule {
+      background-image: url("settings.svg");
+    }
+  }
+}
+
 #progress {
   position: absolute;
   bottom: 25%;
@@ -67,7 +107,8 @@ body {
     transform 30s linear;
 
   & .clock p,
-  & .next-up {
+  & .next-up,
+  & .buttons {
     opacity: 0;
     transition: opacity 0.3s linear;
   }
@@ -79,7 +120,8 @@ body {
     cursor: auto;
 
     & #progress,
-    & .clock p {
+    & .clock p,
+    & .buttons {
       opacity: 1;
     }
   }

@@ -258,17 +258,29 @@ document.addEventListener("click", (event) => {
     removeRow(event.target);
     return;
   }
-  // Ignore click if modal is clicked
-  if (settings.contains(event.target)) {
+  // Toggle full screen if button pressed
+  if (event.target.matches("button.full-screen")) {
+    if (document.fullscreenElement == null) {
+      localStorage.setItem("full-screen", "true");
+      document.documentElement.requestFullscreen();
+    } else {
+      localStorage.setItem("full-screen", "false");
+      document.exitFullscreen();
+    }
     return;
   }
-  // Show the modal otherwise
-  settings.showModal();
+  // Show the modal if button pressed
+  if (event.target.matches("button.schedule")) {
+    settings.showModal();
+  }
 });
 
 settingsForm.addEventListener("submit", () => {
   schedule = prepareSchedule(formToSchedule());
   localStorage.setItem("schedule", JSON.stringify(schedule));
+  if (localStorage.getItem("full-screen") == "true") {
+    document.documentElement.requestFullscreen();
+  }
 });
 
 function formToSchedule() {
