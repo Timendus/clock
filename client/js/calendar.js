@@ -1,4 +1,4 @@
-import * as ical from "./ical.js";
+import * as ical from "../ical.js";
 
 // Manage calendar
 

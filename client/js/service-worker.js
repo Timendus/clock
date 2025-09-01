@@ -1,7 +1,9 @@
 const filesToCache = [
   "index.html",
-  "index.js",
-  "index.css",
+  "js/index.js",
+  "style/index.css",
+  "style/full-screen.svg",
+  "style/settings.svg",
   "ping.mp3",
   "sample-schedule.json",
 ];
