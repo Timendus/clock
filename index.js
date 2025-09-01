@@ -334,7 +334,7 @@ function removeRow(buttonElm) {
 
 // Hide the mouse cursor and some information after a second of inactivity
 
-const mouseHideDelay = 3000;
+const mouseHideDelay = 6000;
 let timer;
 document.addEventListener("mousemove", () => {
   document.body.classList.add("mousefocus");
