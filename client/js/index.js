@@ -13,6 +13,7 @@ scheduleToForm(schedule);
 // Prepare globals
 
 const clockElm = document.querySelector(".clock h1");
+const classicClockElm = document.querySelector(".clock .classic-clock");
 const nowPlayingElm = document.querySelector(".clock p");
 const nextUpH1Elm = document.querySelector(".next-up h1");
 const nextUpPElm = document.querySelector(".next-up p");
@@ -29,12 +30,15 @@ setInterval(update, 1000);
 function update() {
   // Set the time in the clock
   const date = new Date();
+  const timeInSeconds =
+    date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
   date.setSeconds(0);
   date.setMilliseconds(0);
   const hour = date.getHours();
   const minute = date.getMinutes();
   const time = `${hour}:${minute > 9 ? minute : "0" + minute}`;
   clockElm.textContent = time;
+  classicClockElm.style = `--seconds: ${timeInSeconds}`;
 
   // Find relevant schedule items
   let currentScheduleItem, nextScheduleItem;
@@ -61,6 +65,7 @@ function update() {
     nowPlayingElm.textContent = currentScheduleItem.activity;
 
   // Is the next schedule item soon?
+  let bgcolor;
   if (
     nextScheduleItem &&
     minutesBetweenDates(date, nextScheduleItem.date) <= 10
@@ -70,26 +75,31 @@ function update() {
       nextUpH1Elm.textContent = `— Coming up at ${nextScheduleItem.time} —`;
       nextUpPElm.textContent = nextScheduleItem.activity;
     }
-    const color = interpolate(
+    const bgcolor = interpolate(
       nextScheduleItem.color,
       currentScheduleItem.color,
       secondsBetweenDates(new Date(), nextScheduleItem.date) / (10 * 60)
     );
-    document.body.style.backgroundColor = color;
-    themeColorElm.content = color;
-    const textColor = getTextColour(color);
-    document.body.style.color = textColor;
-    progressElm.style.backgroundColor = textColor;
     document.body.classList.add("coming-up");
   } else {
     // Otherwise just use the colour from the current item
-    document.body.style.backgroundColor = currentScheduleItem.color;
-    themeColorElm.content = currentScheduleItem.color;
-    const textColor = getTextColour(currentScheduleItem.color);
-    document.body.style.color = textColor;
-    progressElm.style.backgroundColor = textColor;
+    bgcolor = currentScheduleItem.color;
     document.body.classList.remove("coming-up");
   }
+
+  // Determine text colour and set on the document
+  themeColorElm.content = bgcolor;
+  const fgcolor = getTextColour(bgcolor);
+  const faces = [
+    "faces/quartz.png",
+    "faces/dots.png",
+    "faces/ns.png",
+    "faces/fat numbers.png",
+    "faces/minimal numbers.png",
+    "faces/modern numbers.png",
+  ];
+  const clockFace = faces[1];
+  document.body.style = `--bgcolor: ${bgcolor}; --fgcolor: ${fgcolor}; --face: url("${clockFace}");`;
 
   // Show progress bar to next item, if there is a next item
   if (nextScheduleItem) {

@@ -16,6 +16,7 @@ body {
   text-align: center;
   overflow: hidden;
   user-select: none;
+  background-color: var(--bgcolor);
 }
 
 section {
@@ -32,9 +33,71 @@ section {
   & h1 {
     font-size: 3em;
     font-weight: 200;
+    color: var(--fgcolor);
+
+    display: none;
   }
   & p {
     font-size: 1em;
+    color: var(--fgcolor);
+  }
+
+  & .classic-clock {
+    --clock-size: 20vmax;
+    --minute-hand-thickness: calc(0.03 * var(--clock-size));
+    --hour-hand-thickness: calc(0.04 * var(--clock-size));
+    --half-minute-hand: calc(var(--minute-hand-thickness) / 2);
+    --half-hour-hand: calc(var(--hour-hand-thickness) / 2);
+    --minutes: calc(var(--seconds) / 60);
+    --hours: calc(var(--minutes) / 60);
+
+    position: relative;
+    width: var(--clock-size);
+    height: var(--clock-size);
+    border-radius: 50%;
+
+    /* Clock face */
+    & > div {
+      width: 100%;
+      height: 100%;
+      background-color: var(--fgcolor);
+      mask-image: var(--face);
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+    }
+
+    /* Hours hand */
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      width: var(--hour-hand-thickness);
+      height: calc(0.3 * var(--clock-size));
+      background-color: var(--fgcolor);
+      position: absolute;
+      left: calc(50% - var(--half-hour-hand));
+      top: calc(50% - 0.3 * var(--clock-size) + var(--half-hour-hand));
+      transform: rotateZ(calc(360deg * var(--hours) / 12));
+      transform-origin: var(--half-hour-hand) calc(100% - var(--half-hour-hand));
+      border-top-left-radius: 50%;
+      border-top-right-radius: 50%;
+      border-bottom-left-radius: var(--half-hour-hand);
+      border-bottom-right-radius: var(--half-hour-hand);
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Minutes hand */
+    &:after {
+      width: var(--minute-hand-thickness);
+      height: calc(0.4 * var(--clock-size));
+      background-color: var(--fgcolor);
+      left: calc(50% - var(--half-minute-hand));
+      top: calc(50% - 0.4 * var(--clock-size) + var(--half-minute-hand));
+      transform: rotateZ(calc(360deg * var(--minutes) / 60));
+      transform-origin: var(--half-minute-hand)
+        calc(100% - var(--half-minute-hand));
+    }
   }
 }
 
@@ -99,6 +162,7 @@ section.buttons {
   left: 10%;
   height: 3px;
   transition: width 1s linear, opacity 0.3s linear;
+  background-color: var(--fgcolor);
 }
 
 body {
