@@ -21,6 +21,7 @@ const progressElm = document.querySelector("#progress");
 const themeColorElm = document.querySelector("meta[name=theme-color]");
 const sound = new Audio("./ping.mp3");
 let animating = false;
+let shiftTranslation;
 
 // Make the clock tick
 
@@ -99,7 +100,7 @@ function update() {
     "faces/modern numbers.png",
   ];
   const clockFace = faces[1];
-  document.body.style = `--bgcolor: ${bgcolor}; --fgcolor: ${fgcolor}; --face: url("${clockFace}");`;
+  document.body.style = `--bgcolor: ${bgcolor}; --fgcolor: ${fgcolor}; --face: url("${clockFace}"); ${shiftTranslation}`;
 
   // Show progress bar to next item, if there is a next item
   if (nextScheduleItem) {
@@ -359,12 +360,14 @@ document.addEventListener("mousemove", () => {
 });
 
 // Shift the whole display a couple of pixels to prevent burn in
-
+const MAX_SHIFT_DISTANCE = 10; // pixels
 setInterval(burnInShift, 30 * 1000);
 burnInShift();
 
 function burnInShift() {
-  const xOffset = (Math.floor(Math.random() * 10) - 5) / 10;
-  const yOffset = (Math.floor(Math.random() * 10) - 5) / 10;
-  document.body.style.transform = `translate(${xOffset}em, ${yOffset}em)`;
+  const yOffset =
+    Math.floor(Math.random() * 2 * MAX_SHIFT_DISTANCE) - MAX_SHIFT_DISTANCE;
+  const xOffset =
+    Math.floor(Math.random() * 2 * MAX_SHIFT_DISTANCE) - MAX_SHIFT_DISTANCE;
+  shiftTranslation = `transform: translate(${xOffset}px, ${yOffset}px)`;
 }
