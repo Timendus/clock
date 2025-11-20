@@ -133,19 +133,48 @@ main {
     color: var(--fgcolor);
   }
 
+  --progress-bar-height: 1.5vh;
+
   & #progress {
     width: 80%;
-    height: 12px;
-    margin: 1em auto;
-    border: 1px solid var(--fgcolor);
-    border-radius: 6px;
-    transition: background 1s linear, opacity 0.3s linear;
+    height: var(--progress-bar-height);
+    margin: 1em auto 0 auto;
+    border: 2px solid var(--fgcolor);
+    border-radius: calc(var(--progress-bar-height) / 2);
+    transition: background 1s linear;
     background: linear-gradient(
       to right,
       var(--fgcolor) 0%,
       var(--fgcolor) var(--progress),
       transparent var(--progress)
     );
+  }
+
+  & #day-progress {
+    position: relative;
+    display: flex;
+    width: 80%;
+    height: var(--progress-bar-height);
+    margin: var(--progress-bar-height) auto 1em auto;
+    border: 2px solid var(--fgcolor);
+    border-radius: calc(var(--progress-bar-height) / 2);
+    transition: opacity 0.3s linear;
+    overflow: hidden;
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0px;
+      height: calc(calc(var(--progress-bar-height) / 2) - 2px);
+      z-index: 1;
+      width: var(--progress);
+      background-color: var(--fgcolor);
+    }
+
+    & > div {
+      opacity: 0.5;
+    }
   }
 }
 
@@ -193,21 +222,17 @@ body {
   transition: background-color 1s linear, color 1s ease-in-out,
     transform 30s linear;
 
-  & .current p,
+  & .current,
   & .next-up,
   & .buttons {
     opacity: 0;
     transition: opacity 0.3s linear;
   }
-  & #progress {
-    opacity: 0;
-  }
 
   &.mousefocus {
     cursor: auto;
 
-    & #progress,
-    & .current p,
+    & .current,
     & .buttons {
       opacity: 1;
     }

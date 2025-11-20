@@ -9,6 +9,7 @@ if (!schedule)
   schedule = await fetch("./sample-schedule.json").then((res) => res.json());
 schedule = prepareSchedule(schedule);
 scheduleToForm(schedule);
+scheduleToDayProgressBar(schedule);
 
 // Prepare globals
 
@@ -18,6 +19,7 @@ const nowPlayingElm = document.querySelector(".current p");
 const nextUpH1Elm = document.querySelector(".next-up h1");
 const nextUpPElm = document.querySelector(".next-up p");
 const progressElm = document.querySelector("#progress");
+const dayProgressElm = document.querySelector("#day-progress");
 const themeColorElm = document.querySelector("meta[name=theme-color]");
 const sound = new Audio("./ping.mp3");
 let animating = false;
@@ -113,6 +115,12 @@ function update() {
     progressElm.style = "--progress: 0%";
   }
 
+  // Show progress bar for whole day
+  const midnight = new Date();
+  midnight.setHours(0, 0, 0, 0);
+  const dayProgress = (secondsBetweenDates(midnight, new Date()) / 86400) * 100;
+  dayProgressElm.style = `--progress: ${dayProgress}%`;
+
   // Add triggers for next schedule item animation
   if (
     date.getHours() == currentScheduleItem.date.getHours() &&
@@ -193,6 +201,30 @@ function prepareSchedule(schedule) {
     item.date = d;
   }
   return schedule.sort((a, b) => a.date - b.date);
+}
+
+/**
+ * Create the day progress bar from the given schedule
+ */
+function scheduleToDayProgressBar(schedule) {
+  const previousMidnight = new Date();
+  previousMidnight.setHours(0, 0, 0, 0);
+  const nextMidnight = new Date();
+  nextMidnight.setHours(23, 59, 59, 999);
+
+  let html = "";
+  let previousTime = previousMidnight;
+  let previousColor = schedule[schedule.length - 1].color;
+
+  for (const item of schedule) {
+    const fraction = secondsBetweenDates(previousTime, item.date);
+    html += `<div style="width: ${fraction}%; background-color: ${previousColor};"></div>`;
+    previousTime = item.date;
+    previousColor = item.color;
+  }
+  const fraction = secondsBetweenDates(previousTime, nextMidnight);
+  html += `<div style="width: ${fraction}%; background-color: ${previousColor};"></div>`;
+  document.querySelector("#day-progress").innerHTML = html;
 }
 
 /**
@@ -292,6 +324,7 @@ settingsForm.addEventListener("submit", () => {
   if (localStorage.getItem("full-screen") == "true") {
     document.documentElement.requestFullscreen();
   }
+  scheduleToDayProgressBar(schedule);
 });
 
 function formToSchedule() {
