@@ -75,7 +75,7 @@ function update() {
       nextUpH1Elm.textContent = `— Coming up at ${nextScheduleItem.time} —`;
       nextUpPElm.textContent = nextScheduleItem.activity;
     }
-    const bgcolor = interpolate(
+    bgcolor = interpolate(
       nextScheduleItem.color,
       currentScheduleItem.color,
       secondsBetweenDates(new Date(), nextScheduleItem.date) / (10 * 60)
@@ -345,7 +345,10 @@ function removeRow(buttonElm) {
 // Hide the mouse cursor and some information after a second of inactivity
 
 const mouseHideDelay = 6000;
-let timer;
+let timer = setTimeout(
+  () => document.body.classList.remove("mousefocus"),
+  mouseHideDelay
+);
 document.addEventListener("mousemove", () => {
   document.body.classList.add("mousefocus");
   clearTimeout(timer);
