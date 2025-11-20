@@ -19,42 +19,47 @@ body {
   background-color: var(--bgcolor);
 }
 
-section {
+main {
   height: 100%;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  display: grid;
   justify-content: center;
-  flex-direction: column;
+  justify-items: center;
+  grid-template-rows: 1fr min-content 1fr;
+  grid-template-columns: 100%;
 }
 
 .clock {
-  margin-bottom: 0.5em;
+  &.analog {
+    & h1 {
+      display: none;
+    }
+    & .classic-clock {
+      display: block;
+    }
+  }
 
   & h1 {
     font-size: 3em;
     font-weight: 200;
     color: var(--fgcolor);
-
-    display: none;
-  }
-  & p {
-    font-size: 1em;
-    color: var(--fgcolor);
   }
 
   & .classic-clock {
-    --clock-size: 20vmax;
-    --minute-hand-thickness: calc(0.03 * var(--clock-size));
-    --hour-hand-thickness: calc(0.04 * var(--clock-size));
+    --clock-size: 40vmin;
+    --minute-hand-thickness: calc(0.025 * var(--clock-size));
+    --hour-hand-thickness: calc(0.03 * var(--clock-size));
     --half-minute-hand: calc(var(--minute-hand-thickness) / 2);
     --half-hour-hand: calc(var(--hour-hand-thickness) / 2);
     --minutes: calc(var(--seconds) / 60);
     --hours: calc(var(--minutes) / 60);
 
+    display: none;
     position: relative;
     width: var(--clock-size);
     height: var(--clock-size);
     border-radius: 50%;
+    margin: 0 auto;
 
     /* Clock face */
     & > div {
@@ -84,16 +89,16 @@ section {
       border-top-right-radius: 50%;
       border-bottom-left-radius: var(--half-hour-hand);
       border-bottom-right-radius: var(--half-hour-hand);
-      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+      /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
     }
 
     /* Minutes hand */
     &:after {
       width: var(--minute-hand-thickness);
-      height: calc(0.4 * var(--clock-size));
+      height: calc(0.45 * var(--clock-size));
       background-color: var(--fgcolor);
       left: calc(50% - var(--half-minute-hand));
-      top: calc(50% - 0.4 * var(--clock-size) + var(--half-minute-hand));
+      top: calc(50% - 0.45 * var(--clock-size) + var(--half-minute-hand));
       transform: rotateZ(calc(360deg * var(--minutes) / 60));
       transform-origin: var(--half-minute-hand)
         calc(100% - var(--half-minute-hand));
@@ -102,18 +107,45 @@ section {
 }
 
 .next-up {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   & h1 {
     font-size: 0.8em;
     font-weight: 200;
+    color: var(--fgcolor);
   }
   & p {
     font-size: 1em;
+    color: var(--fgcolor);
+  }
+}
+
+.current {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & p {
+    font-size: 1em;
+    color: var(--fgcolor);
+  }
+
+  & #progress {
+    width: 80%;
+    height: 12px;
+    margin: 1em auto;
+    border: 1px solid var(--fgcolor);
+    border-radius: 6px;
+    transition: background 1s linear, opacity 0.3s linear;
+    background: linear-gradient(
+      to right,
+      var(--fgcolor) 0%,
+      var(--fgcolor) var(--progress),
+      transparent var(--progress)
+    );
   }
 }
 
@@ -156,21 +188,12 @@ section.buttons {
   }
 }
 
-#progress {
-  position: absolute;
-  bottom: 25%;
-  left: 10%;
-  height: 3px;
-  transition: width 1s linear, opacity 0.3s linear;
-  background-color: var(--fgcolor);
-}
-
 body {
   cursor: none;
   transition: background-color 1s linear, color 1s ease-in-out,
     transform 30s linear;
 
-  & .clock p,
+  & .current p,
   & .next-up,
   & .buttons {
     opacity: 0;
@@ -184,7 +207,7 @@ body {
     cursor: auto;
 
     & #progress,
-    & .clock p,
+    & .current p,
     & .buttons {
       opacity: 1;
     }
@@ -199,18 +222,12 @@ body {
   }
 
   &.animate {
-    & section.clock {
+    & main {
       animation: dip-to-black 2s linear;
     }
 
-    & .clock h1 {
+    & .clock {
       animation: wiggle 1s 2 linear;
-    }
-
-    & #progress,
-    & section.next-up,
-    & .clock p {
-      display: none;
     }
   }
 }

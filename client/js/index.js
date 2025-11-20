@@ -14,7 +14,7 @@ scheduleToForm(schedule);
 
 const clockElm = document.querySelector(".clock h1");
 const classicClockElm = document.querySelector(".clock .classic-clock");
-const nowPlayingElm = document.querySelector(".clock p");
+const nowPlayingElm = document.querySelector(".current p");
 const nextUpH1Elm = document.querySelector(".next-up h1");
 const nextUpPElm = document.querySelector(".next-up p");
 const progressElm = document.querySelector("#progress");
@@ -106,10 +106,10 @@ function update() {
     const progress =
       (secondsBetweenDates(currentScheduleItem.date, new Date()) /
         secondsBetweenDates(currentScheduleItem.date, nextScheduleItem.date)) *
-      80;
-    progressElm.style.width = `${progress}%`;
+      100;
+    progressElm.style = `--progress: ${progress}%`;
   } else {
-    progressElm.style.width = "0%";
+    progressElm.style = "--progress: 0%";
   }
 
   // Add triggers for next schedule item animation
